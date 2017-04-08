@@ -3,27 +3,21 @@ package com.bb.executemytrip;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bb.executemytrip.adapter.RouteAdapter;
 import com.bb.executemytrip.api.EmtRestController;
-import com.bb.executemytrip.customview.EmtEditText;
 import com.bb.executemytrip.model.AutoCompleteCityModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -56,7 +50,7 @@ public class RouteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.content_home, container, false);
         findViews();
-        initActionBar(getActivity());
+        initActionBar();
         callAutoCompleteAPI();
         createRouteView();
         return parentView;
@@ -70,12 +64,11 @@ public class RouteFragment extends Fragment
     }
 
 
-    private void initActionBar(Context ctx) {
-
-        toolbar = ((AppCompatActivity) ctx).getSupportActionBar();
-        toolbar.setTitle("Execute My Trip");
+    private void initActionBar() {
+        toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        toolbar.setTitle(getString(R.string.menu_execute_a_plan));
         toolbar.setDisplayHomeAsUpEnabled(false);
-        toolbar.setHomeButtonEnabled(false);
+        toolbar.setHomeButtonEnabled(true);
     }
 
     public void callAutoCompleteAPI(){

@@ -3,6 +3,7 @@ package com.bb.executemytrip;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,16 +28,24 @@ public class PromoCodeFragment extends Fragment {
   private PromoCodeAdapter promoCodeAdapter;
   private ArrayList<PromoCode> alPromoCode;
   private View parentView;
+  private android.support.v7.app.ActionBar toolbar;
 
   @Nullable
   @Override
   public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
     parentView = inflater.inflate(R.layout.fragment_promo_code, container, false);
     findViews();
-
+    initActionBar();
     initRecyclerView();
     checkForPromoCode();
     return parentView;
+  }
+
+  private void initActionBar() {
+    toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+    toolbar.setTitle(getString(R.string.menu_promo));
+    toolbar.setDisplayHomeAsUpEnabled(false);
+    toolbar.setHomeButtonEnabled(true);
   }
 
   private void checkForPromoCode() {

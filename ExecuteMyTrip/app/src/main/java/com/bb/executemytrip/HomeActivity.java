@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     setContentView(R.layout.activity_home);
     findViews();
 
-    setSupportActionBar(toolbar);
+//    setSupportActionBar(toolbar);
     setUpDrawerLayout();
     initFirebase();
     replaceFrag(new RouteFragment(), "");
