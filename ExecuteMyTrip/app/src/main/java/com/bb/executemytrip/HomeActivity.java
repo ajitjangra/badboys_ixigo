@@ -64,7 +64,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             DataSnapshot value = dsPromoCode.child("value");
             JSONObject promocodeObj = new JSONObject();
             try {
-              promocodeObj.put(key.getValue().toString(), value.getValue().toString());
+              promocodeObj.put("key", key.getValue().toString());
+              promocodeObj.put("value", value.getValue().toString());
               promoCodeArray.put(promocodeObj);
             } catch (JSONException e) {
               e.printStackTrace();

@@ -29,7 +29,7 @@ public class EmtUtility {
     return value == null || value.trim().isEmpty();
   }
 
-  static class ToasterUtility {
+  public static class ToasterUtility {
 
     public static void showToastL(final String msg) {
       Toast.makeText(EmtApplication.getAppContext(), msg, Toast.LENGTH_LONG).show();
@@ -52,7 +52,7 @@ public class EmtUtility {
     }
   }
 
-  static class DeviceUtility {
+  public static class DeviceUtility {
 
     public static int getDeviceWidth(final Activity activity) {
       final DisplayMetrics dm = new DisplayMetrics();
@@ -100,7 +100,7 @@ public class EmtUtility {
     }
   }
 
-  static class DateTimeUtility {
+  public static class DateTimeUtility {
 
     public static Date getDateFromString(String dateTime, String dateFormat) {
       if (!isNullOrWhiteSpace(dateTime)) {
@@ -167,7 +167,7 @@ public class EmtUtility {
     }
   }
 
-  static class NetworkUtility {
+  public static class NetworkUtility {
 
     public static boolean isInternetConnected(Context context) {
       final ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -186,7 +186,7 @@ public class EmtUtility {
     }
   }
 
-  static class ViewUtility {
+  public static class ViewUtility {
 
     public static void changeRatingBarColor(RatingBar ratingBar) {
       LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();

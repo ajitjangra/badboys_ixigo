@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  android:id="@+id/activity_promo_code"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  tools:context="com.bb.executemytrip.PromoCodeActivity">
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_promo_code"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+  <com.bb.executemytrip.customview.EmtTextView
+    android:id="@+id/tv_first_msg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:gravity="center"
+    android:text="@string/promocode_no_available_1"
+    android:textColor="@color/colorPrimary"
+    android:textSize="15sp"
+    android:visibility="gone"/>
+
+  <com.bb.executemytrip.customview.EmtTextView
+    android:id="@+id/tv_second_msg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tv_first_msg"
+    android:layout_centerHorizontal="true"
+    android:text="@string/promocode_no_available_2"
+    android:textColor="@color/colorPrimary"
+    android:textSize="15sp"
+    android:visibility="gone"/>
+
+</RelativeLayout>

@@ -24,4 +24,11 @@
     android:text="Auto"
     android:layout_height="wrap_content"/>
 
+  <Button
+    android:id="@+id/btn_promocode"
+    android:layout_below="@id/btn_auto"
+    android:layout_width="wrap_content"
+    android:text="Promo"
+    android:layout_height="wrap_content"/>
+
 </RelativeLayout>

@@ -12,18 +12,24 @@
     android:largeHeap="true"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".EmtSplashActivity" android:screenOrientation="portrait">
+    <activity
+      android:name=".EmtSplashActivity"
+      android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".TestActivity" android:screenOrientation="portrait">
+    <activity
+      android:name=".TestActivity"
+      android:screenOrientation="portrait">
     </activity>
-
-    <activity android:name=".HomeActivity" android:screenOrientation="portrait"/>
-
+    <activity
+      android:name=".HomeActivity"
+      android:screenOrientation="portrait"/>
+    <activity android:name=".PromoCodeActivity">
+    </activity>
   </application>
 
 </manifest>
