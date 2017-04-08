@@ -28,8 +28,6 @@
     <activity
       android:name=".HomeActivity"
       android:screenOrientation="portrait"/>
-    <activity android:name=".PromoCodeActivity">
-    </activity>
   </application>
 
 </manifest>

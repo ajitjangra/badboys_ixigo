@@ -76,7 +76,7 @@ public class TestActivity extends AppCompatActivity {
     btnPromocode.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View view) {
-        startActivity(new Intent(TestActivity.this, PromoCodeActivity.class));
+        startActivity(new Intent(TestActivity.this, PromoCodeFragment.class));
       }
     });
   }
