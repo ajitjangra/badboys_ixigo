@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.bb.executemytrip.util.AjSharedPreference;
+import com.bb.executemytrip.util.EmtSharedPreference;
 
 public class EmtApplication extends Application {
   private static Context context;
@@ -18,7 +18,7 @@ public class EmtApplication extends Application {
     EmtApplication.context = getApplicationContext();
 
     // Shared Preference
-    sharedPreferences = new AjSharedPreference(EmtApplication.getAppContext());
+    sharedPreferences = new EmtSharedPreference(EmtApplication.getAppContext());
   }
 
   public static Context getAppContext() {

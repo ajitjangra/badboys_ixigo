@@ -4,7 +4,7 @@ package com.bb.executemytrip.util;
  * Created by ajitjangra on 3/13/17.
  */
 
-public class AjConstant {
+public class EmtConstant {
   public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy hh:mm:ss";
 
   // Rate App

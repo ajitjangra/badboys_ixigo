@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class AjUtility {
+public class EmtUtility {
 
   public static boolean isNullOrWhiteSpace(String value) {
     return value == null || value.trim().isEmpty();
@@ -105,7 +105,7 @@ public class AjUtility {
     public static Date getDateFromString(String dateTime, String dateFormat) {
       if (!isNullOrWhiteSpace(dateTime)) {
         if (isNullOrWhiteSpace(dateFormat)) {
-          dateFormat = AjConstant.DEFAULT_DATE_FORMAT;
+          dateFormat = EmtConstant.DEFAULT_DATE_FORMAT;
         }
 
         SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.US);
@@ -123,7 +123,7 @@ public class AjUtility {
       if (tempDateTime != null) {
 
         if (isNullOrWhiteSpace(dateFormat)) {
-          dateFormat = AjConstant.DEFAULT_DATE_FORMAT;
+          dateFormat = EmtConstant.DEFAULT_DATE_FORMAT;
         }
 
         SimpleDateFormat outFormat = new SimpleDateFormat(dateFormat, Locale.US);
