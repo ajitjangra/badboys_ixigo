@@ -11,4 +11,17 @@
   android:paddingTop="@dimen/activity_vertical_margin"
   tools:context="com.bb.executemytrip.EmtSplashActivity">
 
+       <ImageView
+           android:layout_centerInParent="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/app_logo"/>
+
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by"
+        />
 </RelativeLayout>

@@ -7,4 +7,20 @@
   <string name="font_bold">bold</string>
   <string name="font_regular">regular</string>
 
+
+  <!--Splash Screen-->
+  <string name="powered_by">powered by Bad Boys</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+  <!--Navigation Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="menu_execute_a_plan">Execute a Plan</string>
+    <string name="menu_my_plan">My Plan</string>
+    <string name="menu_promo">Execute Smile</string>
+
+  <!--Home Screen -->
+  <string name="source">Source</string>
+  <string name="destination">Destination</string>
+
 </resources>
