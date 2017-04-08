@@ -1,10 +1,14 @@
 package com.bb.executemytrip;
 
+import android.app.Activity;
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -46,6 +50,7 @@ public class RouteFragment extends Fragment
   private android.support.v7.app.ActionBar toolbar;
   private ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel;
   private ArrayList<A2BModel.Data.Routes> alA2BModel;
+  private ProgressDialog progress;
 
   @Override
   public void onAttach(Context ctx) {
@@ -59,6 +64,10 @@ public class RouteFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     parentView = inflater.inflate(R.layout.fragment_route, container, false);
     findViews();
+
+    EmtApplication.setValue("source_xid", "");
+    EmtApplication.setValue("destination_xid", "");
+
     registerListener();
     initRecyclerView();
     return parentView;
@@ -111,9 +120,16 @@ public class RouteFragment extends Fragment
     String destinationXid = EmtApplication.getValue("destination_xid", "");
 
     if (!EmtUtility.isNullOrWhiteSpace(sourceXid) && !EmtUtility.isNullOrWhiteSpace(destinationXid)) {
+      if (!EmtUtility.NetworkUtility.isInternetConnected(getActivity())) {
+        showInternetConnectivityDialog();
+        return;
+      }
+
+      showProgressDialog();
       EmtRestController.executeGet((Application) getActivity().getApplicationContext(), EmtRestController.getA2BModesUrl(sourceXid, destinationXid), new Response.Listener<JSONObject>() {
         @Override
         public void onResponse(final JSONObject response) {
+          hideProgressDialog();
           rvRoute.setVisibility(View.VISIBLE);
           tvPlanATrip.setVisibility(View.GONE);
 
@@ -121,16 +137,20 @@ public class RouteFragment extends Fragment
           A2BModel a2BModel = gson.fromJson(response.toString(), A2BModel.class);
 
           if (a2BModel != null && a2BModel.data != null) {
-            if (a2BModel.data.routes != null) {
-              alA2BModel.addAll(a2BModel.data.routes);
-            }
-
             if (a2BModel.data.cheapestRoute != null) {
-              alA2BModel.add(a2BModel.data.cheapestRoute);
+              A2BModel.Data.Routes cheapestRoute = a2BModel.data.cheapestRoute;
+              cheapestRoute.isCheapestRoute = true;
+              alA2BModel.add(cheapestRoute);
             }
 
             if (a2BModel.data.fastestRoute != null) {
-              alA2BModel.add(a2BModel.data.fastestRoute);
+              A2BModel.Data.Routes fastestRoute = a2BModel.data.fastestRoute;
+              fastestRoute.isFastestRoute = true;
+              alA2BModel.add(fastestRoute);
+            }
+
+            if (a2BModel.data.routes != null) {
+              alA2BModel.addAll(a2BModel.data.routes);
             }
 
             mAdapter.notifyDataSetChanged();
@@ -140,10 +160,55 @@ public class RouteFragment extends Fragment
       }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(final VolleyError error) {
+          hideProgressDialog();
           rvRoute.setVisibility(View.GONE);
           tvPlanATrip.setVisibility(View.VISIBLE);
         }
       });
+    }
+  }
+
+  private void showInternetConnectivityDialog() {
+    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctx);
+    alertDialogBuilder.setTitle(ctx.getString(R.string.internet_msg_1));
+    alertDialogBuilder.setMessage(ctx.getString(R.string.internet_msg_2))
+        .setCancelable(false)
+        .setPositiveButton(ctx.getString(R.string.ok), new DialogInterface.OnClickListener() {
+          public void onClick(final DialogInterface dialog, final int id) {
+            ((Activity) ctx).finish();
+            dialog.cancel();
+          }
+        });
+    final AlertDialog alertDialog = alertDialogBuilder.create();
+    if (ctx instanceof Activity) {
+      Activity activity = (Activity) ctx;
+      if (!activity.isFinishing()) {
+        alertDialog.show();
+      }
+    }
+  }
+
+  private void hideProgressDialog() {
+    try {
+      if (isAdded() && getActivity() != null) {
+        if (progress != null && progress.isShowing()) {
+          progress.dismiss();
+        }
+      }
+    } catch (Exception e) {
+    }
+  }
+
+  private void showProgressDialog() {
+    if (isAdded() && getActivity() != null) {
+      if (progress != null && progress.isShowing()) {
+        progress.dismiss();
+      }
+      progress = new ProgressDialog(ctx);
+      progress.setMessage(ctx.getString(R.string.loading));
+      progress.show();
+      progress.setCanceledOnTouchOutside(false);
+      progress.setCancelable(false);
     }
   }
 
@@ -163,6 +228,11 @@ public class RouteFragment extends Fragment
     @Override
     public void onTextChanged(CharSequence query, int start, int before, int count) {
       if (query.toString().trim().length() > 3) {
+
+        if (!EmtUtility.NetworkUtility.isInternetConnected(getActivity())) {
+          showInternetConnectivityDialog();
+          return;
+        }
 
         EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl(query.toString()), new Response.Listener<JSONArray>() {
           @Override

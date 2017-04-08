@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:gravity="center_vertical"
+  android:orientation="horizontal"
+  android:paddingBottom="@dimen/activity_margin_ten"
+  android:paddingTop="@dimen/activity_margin_ten">
+
+  <com.bb.executemytrip.customview.EmtTextView
+    android:id="@+id/tv_step"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"/>
+
+  <com.bb.executemytrip.customview.EmtTextView
+    android:id="@+id/tv_source"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"/>
+
+  <View
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:layout_weight="1"
+    android:background="@android:color/darker_gray"/>
+
+  <LinearLayout
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:background="@drawable/circle"
+    android:gravity="center">
+
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_carrier"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:ellipsize="end"
+      android:maxLength="10"
+      android:maxLines="1"
+      android:textSize="10dp"/>
+
+  </LinearLayout>
+
+
+  <View
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:layout_weight="1"
+    android:background="@android:color/darker_gray"/>
+
+  <com.bb.executemytrip.customview.EmtTextView
+    android:id="@+id/tv_destination"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"/>
+
+</LinearLayout>

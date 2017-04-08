@@ -36,6 +36,9 @@ public class A2BModel {
     public Routes cheapestRoute;
 
     public class Routes {
+      public boolean isCheapestRoute = false;
+      public boolean isFastestRoute = false;
+
       @SerializedName("price")
       public String price;
 
