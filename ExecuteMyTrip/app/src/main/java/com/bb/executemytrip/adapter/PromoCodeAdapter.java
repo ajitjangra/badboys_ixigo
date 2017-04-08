@@ -1,4 +1,4 @@
-package com.bb.executemytrip.adapter1;
+package com.bb.executemytrip.adapter;
 
 import android.app.Activity;
 import android.content.ClipData;

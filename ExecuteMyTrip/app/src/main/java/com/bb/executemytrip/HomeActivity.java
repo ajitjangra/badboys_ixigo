@@ -7,14 +7,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
-import com.bb.executemytrip.adapter.RouteAdapter;
-import com.bb.executemytrip.customview.EmtEditText;
+import com.bb.executemytrip.util.MyPlanFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -127,9 +122,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_executePlan) {
           replaceFrag(new RouteFragment(),"");
         } else if (id == R.id.nav_myPlan) {
-
+          replaceFrag(new MyPlanFragment(),"");
         } else if (id == R.id.nav_promoGiftCode) {
-
+          replaceFrag(new PromoCodeFragment(),"");
         }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
