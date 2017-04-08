@@ -23,4 +23,10 @@
   <string name="source">Source</string>
   <string name="destination">Destination</string>
 
+  <!--Layout Route -->
+  <string name="feature">Cheapest</string>
+  <string name="time">Time : </string>
+  <string name="price">Price :</string>
+  <string name="waytogo">Way to Go</string>
+
 </resources>
