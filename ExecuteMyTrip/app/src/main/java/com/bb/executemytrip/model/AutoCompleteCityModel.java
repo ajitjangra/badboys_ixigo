@@ -9,15 +9,15 @@ import com.google.gson.annotations.SerializedName;
 public class AutoCompleteCityModel {
 
   @SerializedName("text")
-  private String text;
+  public String text;
 
   @SerializedName("lat")
-  private float lat;
+  public float lat;
 
   @SerializedName("lon")
-  private float lon;
+  public float lon;
 
   @SerializedName("xid")
-  private String xid;
+  public String xid;
 
 }

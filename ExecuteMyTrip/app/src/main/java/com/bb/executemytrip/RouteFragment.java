@@ -37,6 +37,7 @@ public class RouteFragment extends Fragment
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private android.support.v7.app.ActionBar toolbar;
+    private ArrayList<String> arrayListFilterAdpater = null;
 
     @Override
     public void onAttach(Context ctx) {
@@ -81,7 +82,7 @@ public class RouteFragment extends Fragment
 
             public void onTextChanged(CharSequence query, int start, int before, int count) {
 
-                if(count >= 0)
+                if(count >= 3)
                 {
                     query = query.toString().toLowerCase();
 
@@ -93,6 +94,19 @@ public class RouteFragment extends Fragment
                             ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>()
                             {
                             }.getType());
+
+                            if(alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() >0) {
+
+                                arrayListFilterAdpater = new ArrayList<String>();
+                                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
+                                    arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
+                                }
+                            }
+
+                            ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,arrayListFilterAdpater);
+
+                            actSource.setAdapter(adapter);
+                            actSource.setThreshold(1);
 
 
                         }
@@ -116,9 +130,39 @@ public class RouteFragment extends Fragment
 
             public void onTextChanged(CharSequence query, int start, int before, int count) {
 
-                if(count >= 0)
+                if(count >= 3)
                 {
                     query = query.toString().toLowerCase();
+
+                    EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(final JSONArray response) {
+                            Gson gson = new Gson();
+
+                            ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>()
+                            {
+                            }.getType());
+
+                            if(alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() >0) {
+
+                                arrayListFilterAdpater = new ArrayList<String>();
+                                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
+                                    arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
+                                }
+                            }
+
+                            ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,arrayListFilterAdpater);
+
+                            actDestination.setAdapter(adapter);
+                            actDestination.setThreshold(1);
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(final VolleyError error) {
+                        }
+                    });
 
                 }
             }
