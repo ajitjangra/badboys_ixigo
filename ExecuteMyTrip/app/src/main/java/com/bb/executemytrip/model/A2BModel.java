@@ -10,106 +10,106 @@ import java.util.ArrayList;
 
 public class A2BModel {
   @SerializedName("data")
-  private Data data;
+  public Data data;
 
-  private class Data {
+  public class Data {
 
     @SerializedName("routes")
-    private ArrayList<Routes> routes;
+    public ArrayList<Routes> routes;
 
     @SerializedName("directFlight")
-    private boolean directFlight;
+    public boolean directFlight;
 
     @SerializedName("directTrain")
-    private boolean directTrain;
+    public boolean directTrain;
 
     @SerializedName("directBus")
-    private boolean directBus;
+    public boolean directBus;
 
     @SerializedName("directCar")
-    private boolean directCar;
+    public boolean directCar;
 
     @SerializedName("fastestRoute")
-    private Routes fastestRoute;
+    public Routes fastestRoute;
 
     @SerializedName("cheapestRoute")
-    private Routes cheapestRoute;
+    public Routes cheapestRoute;
 
-    private class Routes {
+    public class Routes {
       @SerializedName("price")
-      private String price;
+      public String price;
 
       @SerializedName("time")
-      private String time;
+      public String time;
 
       @SerializedName("steps")
-      private ArrayList<Steps> steps;
+      public ArrayList<Steps> steps;
 
       @SerializedName("modes")
-      private ArrayList<String> modes;
+      public ArrayList<String> modes;
 
       @SerializedName("via")
-      private ArrayList<Via> via;
+      public ArrayList<Via> via;
 
       @SerializedName("layOverTimes")
-      private ArrayList<LayOverTimes> layOverTimes;
+      public ArrayList<LayOverTimes> layOverTimes;
 
-      private class Steps {
+      public class Steps {
         @SerializedName("origin")
-        private String origin;
+        public String origin;
 
         @SerializedName("originCode")
-        private String originCode;
+        public String originCode;
 
         @SerializedName("destination")
-        private String destination;
+        public String destination;
 
         @SerializedName("destinationCode")
-        private String destinationCode;
+        public String destinationCode;
 
         @SerializedName("mode")
-        private String mode;
+        public String mode;
 
         @SerializedName("carriers")
-        private ArrayList<Carriers> carriers;
+        public ArrayList<Carriers> carriers;
 
         @SerializedName("minPrice")
-        private int minPrice;
+        public int minPrice;
 
         @SerializedName("minTime")
-        private int minTime;
+        public int minTime;
 
         @SerializedName("timeUnits")
-        private String timeUnits;
+        public String timeUnits;
 
         @SerializedName("distance")
-        private int distance;
+        public int distance;
 
         @SerializedName("carrierName")
-        private String carrierName;
+        public String carrierName;
 
-        private class Carriers {
+        public class Carriers {
           @SerializedName("code")
-          private String code;
+          public String code;
 
           @SerializedName("time")
-          private String time;
+          public String time;
 
           @SerializedName("carrierName")
-          private String carrierName;
+          public String carrierName;
 
           @SerializedName("depTime")
-          private String depTime;
+          public String depTime;
 
           @SerializedName("arrTime")
-          private String arrTime;
+          public String arrTime;
         }
       }
 
-      private class Via {
+      public class Via {
       }
 
-      private class LayOverTimes {
+      public class LayOverTimes {
       }
     }
   }

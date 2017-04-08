@@ -22,17 +22,19 @@ import com.bb.executemytrip.adapter.AutoCompleteArrayAdapter;
 import com.bb.executemytrip.adapter.RouteAdapter;
 import com.bb.executemytrip.api.EmtRestController;
 import com.bb.executemytrip.customview.EmtTextView;
+import com.bb.executemytrip.model.A2BModel;
 import com.bb.executemytrip.model.AutoCompleteCityModel;
 import com.bb.executemytrip.util.EmtUtility;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 
-public class RouteFragment extends Fragment implements AdapterView.OnItemClickListener
+public class RouteFragment extends Fragment
 
 {
   private View parentView;
@@ -44,6 +46,7 @@ public class RouteFragment extends Fragment implements AdapterView.OnItemClickLi
   private RecyclerView.LayoutManager mLayoutManager;
   private android.support.v7.app.ActionBar toolbar;
   private ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel;
+  private ArrayList<A2BModel.Data.Routes> alA2BModel;
 
   @Override
   public void onAttach(Context ctx) {
@@ -66,9 +69,9 @@ public class RouteFragment extends Fragment implements AdapterView.OnItemClickLi
 
   private void registerListener() {
     actSource.addTextChangedListener(new TextChangeWatcher(actSource));
-    actSource.setOnItemClickListener(this);
+    actSource.setOnItemClickListener(sourceItemListener);
     actDestination.addTextChangedListener(new TextChangeWatcher(actDestination));
-    actDestination.setOnItemClickListener(this);
+    actDestination.setOnItemClickListener(destinationItemListener);
   }
 
 
@@ -92,33 +95,67 @@ public class RouteFragment extends Fragment implements AdapterView.OnItemClickLi
     rvRoute.setHasFixedSize(true);
     mLayoutManager = new LinearLayoutManager(getActivity());
     rvRoute.setLayoutManager(mLayoutManager);
-    mAdapter = new RouteAdapter(new ArrayList<String>(), getActivity());
+    alA2BModel = new ArrayList<>();
+    mAdapter = new RouteAdapter(alA2BModel, getActivity());
     rvRoute.setAdapter(mAdapter);
   }
 
-  @Override
-  public void onItemClick(final AdapterView<?> adapterView, final View view, final int pos, final long l) {
-    String xid = alAutoCompleteCityModel.get(pos).xid;
-
-    switch (view.getId()) {
-      case R.id.act_source:
-        EmtApplication.setValue("source_xid", xid);
-        callA2BApi();
-        break;
-
-      case R.id.act_destination:
-        EmtApplication.setValue("destination_xid", xid);
-        callA2BApi();
-        break;
+  final AdapterView.OnItemClickListener sourceItemListener = new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(final AdapterView<?> adapterView, final View view, final int pos, final long l) {
+      String xid = alAutoCompleteCityModel.get(pos).xid;
+      EmtApplication.setValue("source_xid", xid);
+      callA2BApi();
     }
-  }
+  };
+
+  final AdapterView.OnItemClickListener destinationItemListener = new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(final AdapterView<?> adapterView, final View view, final int pos, final long l) {
+      String xid = alAutoCompleteCityModel.get(pos).xid;
+      EmtApplication.setValue("destination_xid", xid);
+      callA2BApi();
+    }
+  };
 
   private void callA2BApi() {
     String sourceXid = EmtApplication.getValue("source_xid", "");
     String destinationXid = EmtApplication.getValue("destination_xid", "");
 
     if (!EmtUtility.isNullOrWhiteSpace(sourceXid) && !EmtUtility.isNullOrWhiteSpace(destinationXid)) {
+      EmtRestController.executeGet((Application) getActivity().getApplicationContext(), EmtRestController.getA2BModesUrl(sourceXid, destinationXid), new Response.Listener<JSONObject>() {
+        @Override
+        public void onResponse(final JSONObject response) {
+          rvRoute.setVisibility(View.VISIBLE);
+          tvPlanATrip.setVisibility(View.GONE);
 
+          Gson gson = new Gson();
+          A2BModel a2BModel = gson.fromJson(response.toString(), A2BModel.class);
+
+          if (a2BModel != null && a2BModel.data != null) {
+            if (a2BModel.data.routes != null) {
+              alA2BModel.addAll(a2BModel.data.routes);
+            }
+
+            if (a2BModel.data.cheapestRoute != null) {
+              alA2BModel.add(a2BModel.data.cheapestRoute);
+            }
+
+            if (a2BModel.data.fastestRoute != null) {
+              alA2BModel.add(a2BModel.data.fastestRoute);
+            }
+
+            mAdapter.notifyDataSetChanged();
+          }
+
+        }
+      }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(final VolleyError error) {
+          rvRoute.setVisibility(View.GONE);
+          tvPlanATrip.setVisibility(View.VISIBLE);
+        }
+      });
     }
   }
 
