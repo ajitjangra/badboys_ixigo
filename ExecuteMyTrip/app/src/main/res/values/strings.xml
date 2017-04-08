@@ -35,4 +35,15 @@
   <string name="price">Price :</string>
   <string name="waytogo">Way to Go</string>
 
+
+  <!--Detail Screen -->
+  <string name="detail_promoCode_hint">Promo code</string>
+  <string name="detail_let_execute_plan">Let Execute Plan</string>
+  <string name="detail_fastest_carrier">Fastest Carrier : </string>
+  <string name="detail_Possible_carrier">Possible Carrier: </string>
+  <string name="detail_minimum_price">Minimum Price: </string>
+  <string name="detail_minimum_time">Minimum Time: </string>
+  <string name="detail_distance">Distance: </string>
+  <string name="detail_fastest_carrier_duration">Fastest Carrier Duration: </string>
+
 </resources>

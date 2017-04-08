@@ -26,8 +26,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
   private Toolbar toolbar;
-  private DrawerLayout drawer;
+//  private DrawerLayout drawer;
+//  private NavigationView navigationView;
+
   private NavigationView navigationView;
+  private DrawerLayout drawer;
 
 
   @Override

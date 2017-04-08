@@ -10,8 +10,8 @@
 
 
 
-    <FrameLayout
-        android:id="@+id/fl_frag_main"
+    <include
+        layout="@layout/app_bar_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

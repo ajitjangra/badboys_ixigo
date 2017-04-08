@@ -3,13 +3,14 @@ package com.bb.executemytrip;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,13 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bb.executemytrip.adapter.RouteAdapter;
 import com.bb.executemytrip.api.EmtRestController;
-import com.bb.executemytrip.customview.EmtEditText;
 import com.bb.executemytrip.model.AutoCompleteCityModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +43,8 @@ public class RouteFragment extends Fragment
     private RecyclerView.LayoutManager mLayoutManager;
     private android.support.v7.app.ActionBar toolbar;
     private ArrayList<String> arrayListFilterAdpater = null;
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
 
     @Override
     public void onAttach(Context ctx) {
@@ -58,6 +59,7 @@ public class RouteFragment extends Fragment
         parentView = inflater.inflate(R.layout.content_home, container, false);
         findViews();
         initActionBar(getActivity());
+        setUpDrawerLayout();
         callAutoCompleteAPI();
         createRouteView();
         return parentView;
@@ -68,6 +70,8 @@ public class RouteFragment extends Fragment
         actSource = (AutoCompleteTextView) parentView.findViewById(R.id.act_Source);
         actDestination = (AutoCompleteTextView) parentView.findViewById(R.id.act_Destination);
         rvRoute =  (RecyclerView) parentView.findViewById(R.id.rv_Route);
+        navigationView = (NavigationView) ((HomeActivity) this.getActivity()).findViewById(R.id.drawer_layout);
+
     }
 
 
@@ -77,6 +81,12 @@ public class RouteFragment extends Fragment
         toolbar.setTitle("Execute My Trip");
         toolbar.setDisplayHomeAsUpEnabled(false);
         toolbar.setHomeButtonEnabled(false);
+
+    }
+
+    private void setUpDrawerLayout() {
+
+      drawer.closeDrawers();
     }
 
     public void callAutoCompleteAPI(){
