@@ -19,8 +19,8 @@
         android:layout_marginTop="10dp"/>
 
 
-    <EditText
-        android:id="@+id/et_Source"
+    <AutoCompleteTextView
+        android:id="@+id/act_Source"
         android:layout_width="match_parent"
         android:layout_marginLeft="40dp"
         android:layout_height="wrap_content"
@@ -50,12 +50,12 @@
 
 
 
-    <EditText
-        android:id="@+id/et_destination"
+    <AutoCompleteTextView
+        android:id="@+id/act_Destination"
         android:layout_alignRight="@+id/iv_Destination"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
-        android:layout_below="@+id/et_Source"
+        android:layout_below="@+id/act_Source"
         android:layout_alignParentRight="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
