@@ -29,4 +29,10 @@
   <string name="promocode_no_available_1">Right now no promo code is available.</string>
   <string name="promocode_no_available_2">Please try later.</string>
 
+  <!--Layout Route -->
+  <string name="feature">Cheapest</string>
+  <string name="time">Time : </string>
+  <string name="price">Price :</string>
+  <string name="waytogo">Way to Go</string>
+
 </resources>
