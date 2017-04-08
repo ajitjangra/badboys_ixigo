@@ -1,6 +1,7 @@
 package com.bb.executemytrip.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -12,11 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bb.executemytrip.R;
+import com.bb.executemytrip.RouteDetailActivity;
 import com.bb.executemytrip.customview.EmtTextView;
 import com.bb.executemytrip.model.A2BModel;
 import com.bb.executemytrip.util.EmtUtility;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -36,6 +42,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   private static final int TYPE_HEADER = 0;
   private static final int TYPE_ITEM = 1;
+  private Gson gson;
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     public TextView tvTimeValue, tvPriceValue, tvRouteType;
@@ -79,6 +86,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     this.arrayList = productItemArrayList;
     mLayoutInflator = LayoutInflater.from(ctx);
     routeAdapterInterface = (RouteAdapterInterface) ctx;
+    gson = new Gson();
   }
 
   @Override
@@ -102,7 +110,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
       ViewHolderRoute holder = (ViewHolderRoute) holderMain;
 
-      A2BModel.Data.Routes route = arrayList.get(position - 1);
+      final A2BModel.Data.Routes route = arrayList.get(position - 1);
 
       holder.tvTimeValue.setText(route.time + " " + route.timeUnit);
       holder.tvPriceValue.setText(route.price);
@@ -142,7 +150,11 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(context, RouteDetailActivity.class);
 
+          String selectedRoute = gson.toJson(route);
+          intent.putExtra("route", selectedRoute);
+          context.startActivity(intent);
         }
       });
     } else if (holderMain instanceof ViewHolderHeader) {
