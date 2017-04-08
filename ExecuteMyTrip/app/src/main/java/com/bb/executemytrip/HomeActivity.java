@@ -9,8 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 
+import com.bb.executemytrip.adapter.RouteAdapter;
 import com.bb.executemytrip.util.MyPlanFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RouteAdapter.RouteAdapterInterface{
 
 
   private Toolbar toolbar;
@@ -30,6 +34,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
   private NavigationView navigationView;
 
   private boolean shouldLoadHomeFragOnBackPress = false;
+
+  RouteFragment routeFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     setUpDrawerLayout();
     initFirebase();
-    replaceFrag(new RouteFragment(), "");
+
+    routeFragment = new RouteFragment();
+    replaceFrag(routeFragment, "");
+
     navigationView.getMenu().getItem(0).setChecked(true);
   }
 
@@ -105,7 +114,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
       drawer.closeDrawer(GravityCompat.START);
     } else if (shouldLoadHomeFragOnBackPress) {
       shouldLoadHomeFragOnBackPress = false;
-      replaceFrag(new RouteFragment(), "");
+      routeFragment = new RouteFragment();
+      replaceFrag(routeFragment, "");
       navigationView.getMenu().getItem(0).setChecked(true);
     } else {
       super.onBackPressed();
@@ -130,7 +140,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     if (id == R.id.nav_executePlan) {
       toolbar.setTitle(getString(R.string.menu_execute_a_plan));
-      replaceFrag(new RouteFragment(), "");
+      routeFragment = new RouteFragment();
+      replaceFrag(routeFragment, "");
       shouldLoadHomeFragOnBackPress = false;
     } else if (id == R.id.nav_myPlan) {
       toolbar.setTitle(getString(R.string.menu_my_plan));
@@ -157,5 +168,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
           .replace(R.id.fl_frag_main, frag)
           .addToBackStack(addToBackStack).commit();
     }
+  }
+
+  @Override
+  public AdapterView.OnItemClickListener sourceItemClick() {
+    if(routeFragment != null){
+      return routeFragment.sourceItemListener();
+    }
+
+    return null;
+  }
+
+  @Override
+  public AdapterView.OnItemClickListener destinationItemClick() {
+    if(routeFragment != null){
+      return routeFragment.destinationItemListener();
+    }
+
+    return null;
+  }
+
+  @Override
+  public TextWatcher textWatcher(final AutoCompleteTextView actView) {
+    if(routeFragment != null){
+      return routeFragment.textWatcher(actView);
+    }
+
+    return null;
   }
 }

@@ -6,22 +6,10 @@
   android:orientation="vertical">
 
 
-  <include layout="@layout/lay_source_destination"/>
-
-
   <android.support.v7.widget.RecyclerView
     android:id="@+id/rv_route"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/activity_margin_ten"
-    android:visibility="gone"/>
-
-  <com.bb.executemytrip.customview.EmtTextView
-    android:id="@+id/tv_plan_a_trip"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:text="@string/route_plan_a_trip"
-    android:textSize="25sp"/>
+    android:visibility="visible"/>
 
 </LinearLayout>

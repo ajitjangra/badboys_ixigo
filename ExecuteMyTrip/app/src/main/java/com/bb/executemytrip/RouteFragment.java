@@ -24,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.bb.executemytrip.adapter.AutoCompleteArrayAdapter;
 import com.bb.executemytrip.adapter.RouteAdapter;
 import com.bb.executemytrip.api.EmtRestController;
-import com.bb.executemytrip.customview.EmtTextView;
 import com.bb.executemytrip.model.A2BModel;
 import com.bb.executemytrip.model.AutoCompleteCityModel;
 import com.bb.executemytrip.util.EmtUtility;
@@ -42,9 +41,8 @@ public class RouteFragment extends Fragment
 {
   private View parentView;
   private Context ctx;
-  private AutoCompleteTextView actSource, actDestination;
+  //  private AutoCompleteTextView actSource, actDestination;
   private RecyclerView rvRoute;
-  private EmtTextView tvPlanATrip;
   private RecyclerView.Adapter mAdapter;
   private RecyclerView.LayoutManager mLayoutManager;
   private android.support.v7.app.ActionBar toolbar;
@@ -68,24 +66,13 @@ public class RouteFragment extends Fragment
     EmtApplication.setValue("source_xid", "");
     EmtApplication.setValue("destination_xid", "");
 
-    registerListener();
     initRecyclerView();
     return parentView;
   }
 
-  private void registerListener() {
-    actSource.addTextChangedListener(new TextChangeWatcher(actSource));
-    actSource.setOnItemClickListener(sourceItemListener);
-    actDestination.addTextChangedListener(new TextChangeWatcher(actDestination));
-    actDestination.setOnItemClickListener(destinationItemListener);
-  }
-
 
   private void findViews() {
-    actSource = (AutoCompleteTextView) parentView.findViewById(R.id.act_source);
-    actDestination = (AutoCompleteTextView) parentView.findViewById(R.id.act_destination);
     rvRoute = (RecyclerView) parentView.findViewById(R.id.rv_route);
-    tvPlanATrip = (EmtTextView) parentView.findViewById(R.id.tv_plan_a_trip);
   }
 
   private void initRecyclerView() {
@@ -130,11 +117,14 @@ public class RouteFragment extends Fragment
         @Override
         public void onResponse(final JSONObject response) {
           hideProgressDialog();
-          rvRoute.setVisibility(View.VISIBLE);
-          tvPlanATrip.setVisibility(View.GONE);
 
           Gson gson = new Gson();
-          A2BModel a2BModel = gson.fromJson(response.toString(), A2BModel.class);
+          A2BModel a2BModel = null;
+          try {
+            a2BModel = gson.fromJson(response.toString(), A2BModel.class);
+          } catch (Exception e) {
+
+          }
 
           if (a2BModel != null && a2BModel.data != null) {
             if (a2BModel.data.cheapestRoute != null) {
@@ -161,8 +151,6 @@ public class RouteFragment extends Fragment
         @Override
         public void onErrorResponse(final VolleyError error) {
           hideProgressDialog();
-          rvRoute.setVisibility(View.GONE);
-          tvPlanATrip.setVisibility(View.VISIBLE);
         }
       });
     }
@@ -213,9 +201,9 @@ public class RouteFragment extends Fragment
   }
 
   class TextChangeWatcher implements TextWatcher {
-    View view;
+    AutoCompleteTextView view;
 
-    public TextChangeWatcher(View view) {
+    public TextChangeWatcher(AutoCompleteTextView view) {
       this.view = view;
     }
 
@@ -244,15 +232,9 @@ public class RouteFragment extends Fragment
 
             AutoCompleteArrayAdapter adapter = new AutoCompleteArrayAdapter(getActivity(), R.layout.row_auto_complete, alAutoCompleteCityModel);
 
-            if (view.getId() == R.id.act_source) {
-              actSource.setAdapter(adapter);
-              actSource.setThreshold(1);
-              actSource.setTextColor(Color.BLACK);
-            } else if (view.getId() == R.id.act_destination) {
-              actDestination.setAdapter(adapter);
-              actDestination.setThreshold(1);
-              actDestination.setTextColor(Color.BLACK);
-            }
+            view.setAdapter(adapter);
+            view.setThreshold(1);
+            view.setTextColor(Color.BLACK);
           }
         }, new Response.ErrorListener() {
           @Override
@@ -272,6 +254,18 @@ public class RouteFragment extends Fragment
     public void afterTextChanged(final Editable editable) {
 
     }
+  }
+
+  public AdapterView.OnItemClickListener sourceItemListener() {
+    return sourceItemListener;
+  }
+
+  public AdapterView.OnItemClickListener destinationItemListener() {
+    return destinationItemListener;
+  }
+
+  public TextWatcher textWatcher(final AutoCompleteTextView actView) {
+    return new TextChangeWatcher(actView);
   }
 
 }
