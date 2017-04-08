@@ -3,7 +3,6 @@ package com.bb.executemytrip.util;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,18 +30,10 @@ public class MyPlanFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     parentView = inflater.inflate(R.layout.fragment_my_plan, container, false);
     findViews();
-    initActionBar();
     return parentView;
   }
 
   private void findViews() {
-  }
-
-  private void initActionBar() {
-    toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-    toolbar.setTitle(getString(R.string.menu_my_plan));
-    toolbar.setDisplayHomeAsUpEnabled(true);
-    toolbar.setHomeButtonEnabled(true);
   }
 
 }

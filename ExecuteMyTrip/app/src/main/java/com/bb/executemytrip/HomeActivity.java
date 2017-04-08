@@ -29,6 +29,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
   private DrawerLayout drawer;
   private NavigationView navigationView;
 
+  private boolean shouldLoadHomeFragOnBackPress = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     setContentView(R.layout.activity_home);
     findViews();
 
+    toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+
     setUpDrawerLayout();
     initFirebase();
     replaceFrag(new RouteFragment(), "");
+    navigationView.getMenu().getItem(0).setChecked(true);
   }
 
   private void initFirebase() {
@@ -98,6 +103,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     if (drawer.isDrawerOpen(GravityCompat.START)) {
       drawer.closeDrawer(GravityCompat.START);
+    } else if (shouldLoadHomeFragOnBackPress) {
+      shouldLoadHomeFragOnBackPress = false;
+      replaceFrag(new RouteFragment(), "");
+      navigationView.getMenu().getItem(0).setChecked(true);
     } else {
       super.onBackPressed();
     }
@@ -120,11 +129,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     int id = item.getItemId();
 
     if (id == R.id.nav_executePlan) {
+      toolbar.setTitle(getString(R.string.menu_execute_a_plan));
       replaceFrag(new RouteFragment(), "");
+      shouldLoadHomeFragOnBackPress = false;
     } else if (id == R.id.nav_myPlan) {
+      toolbar.setTitle(getString(R.string.menu_my_plan));
       replaceFrag(new MyPlanFragment(), "");
+      shouldLoadHomeFragOnBackPress = true;
     } else if (id == R.id.nav_promoGiftCode) {
+      toolbar.setTitle(getString(R.string.menu_promo));
       replaceFrag(new PromoCodeFragment(), "");
+      shouldLoadHomeFragOnBackPress = true;
     }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

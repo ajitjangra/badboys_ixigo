@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -60,8 +59,6 @@ public class RouteFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     parentView = inflater.inflate(R.layout.fragment_route, container, false);
     findViews();
-    initActionBar();
-
     registerListener();
     initRecyclerView();
     return parentView;
@@ -81,15 +78,6 @@ public class RouteFragment extends Fragment
     rvRoute = (RecyclerView) parentView.findViewById(R.id.rv_route);
     tvPlanATrip = (EmtTextView) parentView.findViewById(R.id.tv_plan_a_trip);
   }
-
-
-  private void initActionBar() {
-    toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-    toolbar.setTitle(getString(R.string.menu_execute_a_plan));
-    toolbar.setDisplayHomeAsUpEnabled(true);
-    toolbar.setHomeButtonEnabled(true);
-  }
-
 
   private void initRecyclerView() {
     rvRoute.setHasFixedSize(true);
