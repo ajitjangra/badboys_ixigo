@@ -9,7 +9,7 @@
     android:layout_marginTop="@dimen/activity_margin_ten"
     android:layout_marginBottom="@dimen/activity_margin_ten">
 
-    <TextView
+    <com.bb.executemytrip.customview.EmtTextView
         android:id="@+id/tv_Step"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:text="Step 1. " />
 
 
-    <TextView
+    <com.bb.executemytrip.customview.EmtTextView
         android:id="@+id/tv_Source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         android:layout_weight="1"
         android:background="@android:color/darker_gray" />
 
-    <TextView
+    <com.bb.executemytrip.customview.EmtTextView
         android:id="@+id/tv_Destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

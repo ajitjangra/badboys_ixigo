@@ -26,27 +26,27 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <TextView
+                <com.bb.executemytrip.customview.EmtTextView
                     android:id="@+id/tv_TimeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/time" />
 
-                <TextView
+                <com.bb.executemytrip.customview.EmtTextView
                     android:id="@+id/tv_TimeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:text="10:00 PM" />
 
-                <TextView
+                <com.bb.executemytrip.customview.EmtTextView
                     android:id="@+id/tv_PriceLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:text="@string/price" />
 
-                <TextView
+                <com.bb.executemytrip.customview.EmtTextView
                     android:id="@+id/tv_PriceValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +58,8 @@
             </RelativeLayout>
 
 
-            <TextView
+            <com.bb.executemytrip.customview.EmtTextView
+                android:id="@+id/tv_feature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/tv_roundedcorner"
@@ -75,14 +76,20 @@
             android:background="@android:color/darker_gray"/>
 
 
-        <TextView
+        <com.bb.executemytrip.customview.EmtTextView
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/waytogo"
             android:textStyle="bold"/>
 
-       <include layout="@layout/layout_step"/>
+        //we can add the recycle view in case of ll_step but in this case no much data , so i use Linearlayout
+
+        <LinearLayout
+            android:id="@+id/ll_Step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
 
     </LinearLayout>
 
