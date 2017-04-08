@@ -57,7 +57,7 @@ public class AutoCompleteArrayAdapter extends ArrayAdapter<AutoCompleteCityModel
         convertView = inflater.inflate(mLayoutResourceId, parent, false);
       }
       AutoCompleteCityModel autoCompleteCityModel = getItem(position);
-      TextView name = (TextView) convertView.findViewById(R.id.textView);
+      TextView name = (TextView) convertView.findViewById(R.id.tv_code);
       name.setText(autoCompleteCityModel.text);
     } catch (Exception e) {
       e.printStackTrace();

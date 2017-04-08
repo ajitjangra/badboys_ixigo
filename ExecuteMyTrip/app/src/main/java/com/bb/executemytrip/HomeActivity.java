@@ -36,7 +36,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     setContentView(R.layout.activity_home);
     findViews();
 
-//    setSupportActionBar(toolbar);
     setUpDrawerLayout();
     initFirebase();
     replaceFrag(new RouteFragment(), "");
@@ -94,10 +93,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
   }
 
 
-
-
-
-
   @Override
   public void onBackPressed() {
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -110,22 +105,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-
-    return false;
+    switch (item.getItemId()) {
+      case android.R.id.home: {
+        return true;
+      }
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    int id = item.getItemId();
 
-        if (id == R.id.nav_executePlan) {
-          replaceFrag(new RouteFragment(),"");
-        } else if (id == R.id.nav_myPlan) {
-          replaceFrag(new MyPlanFragment(),"");
-        } else if (id == R.id.nav_promoGiftCode) {
-          replaceFrag(new PromoCodeFragment(),"");
-        }
+    if (id == R.id.nav_executePlan) {
+      replaceFrag(new RouteFragment(), "");
+    } else if (id == R.id.nav_myPlan) {
+      replaceFrag(new MyPlanFragment(), "");
+    } else if (id == R.id.nav_promoGiftCode) {
+      replaceFrag(new PromoCodeFragment(), "");
+    }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
@@ -135,12 +135,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
   private void replaceFrag(Fragment frag, String addToBackStack) {
     if (TextUtils.isEmpty(addToBackStack.trim())) {
       getSupportFragmentManager().beginTransaction()
-              .replace(R.id.fl_frag_main, frag).commit();
+          .replace(R.id.fl_frag_main, frag).commit();
 
     } else {
       getSupportFragmentManager().beginTransaction()
-              .replace(R.id.fl_frag_main, frag)
-              .addToBackStack(addToBackStack).commit();
+          .replace(R.id.fl_frag_main, frag)
+          .addToBackStack(addToBackStack).commit();
     }
   }
 }

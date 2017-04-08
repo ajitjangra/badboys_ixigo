@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.bb.executemytrip.customview.EmtTextView
+  android:id="@+id/tv_code"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:padding="15dp"
+  android:textSize="12sp"/>
