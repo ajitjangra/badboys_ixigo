@@ -18,6 +18,6 @@ public class EmtSplashActivity extends AppCompatActivity {
       public void run() {
         startActivity(new Intent(EmtSplashActivity.this, HomeActivity.class));
       }
-    }, 500);
+    }, 1000);
   }
 }
