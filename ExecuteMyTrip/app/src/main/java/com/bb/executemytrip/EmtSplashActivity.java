@@ -17,6 +17,7 @@ public class EmtSplashActivity extends AppCompatActivity {
       @Override
       public void run() {
         startActivity(new Intent(EmtSplashActivity.this, HomeActivity.class));
+        finish();
       }
     }, 1000);
   }

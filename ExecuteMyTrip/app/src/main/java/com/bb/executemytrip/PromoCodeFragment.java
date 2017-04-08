@@ -27,13 +27,13 @@ public class PromoCodeFragment extends Fragment {
   private PromoCodeAdapter promoCodeAdapter;
   private ArrayList<PromoCode> alPromoCode;
   private View parentView;
+  private android.support.v7.app.ActionBar toolbar;
 
   @Nullable
   @Override
   public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
     parentView = inflater.inflate(R.layout.fragment_promo_code, container, false);
     findViews();
-
     initRecyclerView();
     checkForPromoCode();
     return parentView;
