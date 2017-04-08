@@ -1,6 +1,7 @@
 package com.bb.executemytrip;
 
 import android.app.Application;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class TestActivity extends AppCompatActivity {
 
     Button btnATwoB = (Button) findViewById(R.id.btn_atwob);
     Button btnAuto = (Button) findViewById(R.id.btn_auto);
+    Button btnPromocode = (Button) findViewById(R.id.btn_promocode);
 
     btnATwoB.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -60,14 +62,21 @@ public class TestActivity extends AppCompatActivity {
             Gson gson = new Gson();
 
             A2BModel a2BModel = gson.fromJson(response.toString(), A2BModel.class);
-            System.out.println("ajit3 "+response);
+            System.out.println("ajit3 " + response);
           }
         }, new Response.ErrorListener() {
           @Override
           public void onErrorResponse(final VolleyError error) {
-            System.out.println("ajit4 "+error);
+            System.out.println("ajit4 " + error);
           }
         });
+      }
+    });
+
+    btnPromocode.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(final View view) {
+        startActivity(new Intent(TestActivity.this, PromoCodeActivity.class));
       }
     });
   }

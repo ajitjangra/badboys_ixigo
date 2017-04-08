@@ -36,7 +36,6 @@ public class HomeActivity extends AppCompatActivity
     setSupportActionBar(toolbar);
     setUpDrawerLayout();
     initFirebase();
-
   }
 
   private void initFirebase() {
@@ -56,7 +55,8 @@ public class HomeActivity extends AppCompatActivity
             DataSnapshot value = dsPromoCode.child("value");
             JSONObject promocodeObj = new JSONObject();
             try {
-              promocodeObj.put(key.getValue().toString(), value.getValue().toString());
+              promocodeObj.put("key", key.getValue().toString());
+              promocodeObj.put("value", value.getValue().toString());
               promoCodeArray.put(promocodeObj);
             } catch (JSONException e) {
               e.printStackTrace();
@@ -108,22 +108,14 @@ public class HomeActivity extends AppCompatActivity
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
-    // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
+    int id = item.getItemId();
+    if (id == R.id.nav_myPlan) {
+      // Handle the camera action
+    } else if (id == R.id.nav_executePlan) {
+
+    } else if (id == R.id.nav_promoGiftCode) {
+
+    }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
