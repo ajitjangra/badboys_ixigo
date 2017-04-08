@@ -1,3 +1,10 @@
 <resources>
   <string name="app_name">ExecuteMyTrip</string>
+
+  <!--Font used in app-->
+  <string name="font_light">light</string>
+  <string name="font_medium">medium</string>
+  <string name="font_bold">bold</string>
+  <string name="font_regular">regular</string>
+
 </resources>
