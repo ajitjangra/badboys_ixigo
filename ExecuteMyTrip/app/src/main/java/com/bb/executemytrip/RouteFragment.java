@@ -1,10 +1,12 @@
 package com.bb.executemytrip;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +15,20 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.bb.executemytrip.adapter.RouteAdapter;
+import com.bb.executemytrip.api.EmtRestController;
 import com.bb.executemytrip.customview.EmtEditText;
+import com.bb.executemytrip.model.AutoCompleteCityModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -30,7 +42,7 @@ public class RouteFragment extends Fragment
     private RecyclerView rvRoute;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    private android.support.v7.app.ActionBar toolbar;
 
     @Override
     public void onAttach(Context ctx) {
@@ -44,15 +56,26 @@ public class RouteFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.content_home, container, false);
         findViews();
+        initActionBar(getActivity());
         callAutoCompleteAPI();
         createRouteView();
         return parentView;
     }
 
+
     private void findViews() {
         actSource = (AutoCompleteTextView) parentView.findViewById(R.id.act_Source);
         actDestination = (AutoCompleteTextView) parentView.findViewById(R.id.act_Destination);
         rvRoute =  (RecyclerView) parentView.findViewById(R.id.rv_Route);
+    }
+
+
+    private void initActionBar(Context ctx) {
+
+        toolbar = ((AppCompatActivity) ctx).getSupportActionBar();
+        toolbar.setTitle("Execute My Trip");
+        toolbar.setDisplayHomeAsUpEnabled(false);
+        toolbar.setHomeButtonEnabled(false);
     }
 
     public void callAutoCompleteAPI(){
@@ -65,22 +88,46 @@ public class RouteFragment extends Fragment
 
             public void onTextChanged(CharSequence query, int start, int before, int count) {
 
-                query = query.toString().toLowerCase();
+                if(count >= 0)
+                {
+                    query = query.toString().toLowerCase();
 
-                final ArrayList<String> filteredList = new ArrayList<>();
+                    EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(final JSONArray response) {
+                            Gson gson = new Gson();
 
-//                for (int i = 0; i < arrayListHotelListModel.size(); i++) {
-//
-//                    final String text = arrayListHotelListModel.get(i).strHotelName.toLowerCase();
-//                    if (text.contains(query)) {
-//
-//                        filteredList.add(arrayListHotelListModel.get(i));
-//                    }
-//                }
-//
-//                mAdapter = new CustomListBooking(filteredList, getActivity());
-//                rvHotelList.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();  // data set changed
+                            ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>()
+                            {
+                            }.getType());
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(final VolleyError error) {
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+
+        actSource.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence query, int start, int before, int count) {
+
+                if(count >= 0)
+                {
+                    query = query.toString().toLowerCase();
+
+                }
             }
         });
     }
