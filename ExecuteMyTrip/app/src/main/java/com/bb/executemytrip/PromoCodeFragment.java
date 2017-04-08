@@ -44,7 +44,7 @@ public class PromoCodeFragment extends Fragment {
   private void initActionBar() {
     toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     toolbar.setTitle(getString(R.string.menu_promo));
-    toolbar.setDisplayHomeAsUpEnabled(false);
+    toolbar.setDisplayHomeAsUpEnabled(true);
     toolbar.setHomeButtonEnabled(true);
   }
 

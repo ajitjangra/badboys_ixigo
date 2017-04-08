@@ -41,7 +41,7 @@ public class MyPlanFragment extends Fragment
   private void initActionBar() {
     toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     toolbar.setTitle(getString(R.string.menu_my_plan));
-    toolbar.setDisplayHomeAsUpEnabled(false);
+    toolbar.setDisplayHomeAsUpEnabled(true);
     toolbar.setHomeButtonEnabled(true);
   }
 

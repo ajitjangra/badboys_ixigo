@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.android.volley.Response;
@@ -30,151 +31,150 @@ import java.util.ArrayList;
 public class RouteFragment extends Fragment
 
 {
-    private View parentView;
-    private Context ctx;
-    private AutoCompleteTextView actSource, actDestination;
-    private RecyclerView rvRoute;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private android.support.v7.app.ActionBar toolbar;
-    private ArrayList<String> arrayListFilterAdpater = null;
+  private View parentView;
+  private Context ctx;
+  private AutoCompleteTextView actSource, actDestination;
+  private RecyclerView rvRoute;
+  private RecyclerView.Adapter mAdapter;
+  private RecyclerView.LayoutManager mLayoutManager;
+  private android.support.v7.app.ActionBar toolbar;
+  private ArrayList<String> arrayListFilterAdpater = null;
 
-    @Override
-    public void onAttach(Context ctx) {
-        super.onAttach(ctx);
-        this.ctx = ctx;
+  @Override
+  public void onAttach(Context ctx) {
+    super.onAttach(ctx);
+    this.ctx = ctx;
 
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        parentView = inflater.inflate(R.layout.content_home, container, false);
-        findViews();
-        initActionBar();
-        callAutoCompleteAPI();
-        createRouteView();
-        return parentView;
-    }
+  }
 
 
-    private void findViews() {
-        actSource = (AutoCompleteTextView) parentView.findViewById(R.id.act_Source);
-        actDestination = (AutoCompleteTextView) parentView.findViewById(R.id.act_Destination);
-        rvRoute =  (RecyclerView) parentView.findViewById(R.id.rv_Route);
-    }
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    parentView = inflater.inflate(R.layout.content_home, container, false);
+    findViews();
+    initActionBar();
+    callAutoCompleteAPI();
+    createRouteView();
+    return parentView;
+  }
 
 
-    private void initActionBar() {
-        toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        toolbar.setTitle(getString(R.string.menu_execute_a_plan));
-        toolbar.setDisplayHomeAsUpEnabled(false);
-        toolbar.setHomeButtonEnabled(true);
-    }
-
-    public void callAutoCompleteAPI(){
-
-        actSource.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {}
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            public void onTextChanged(CharSequence query, int start, int before, int count) {
-
-                if(count >= 3)
-                {
-                    query = query.toString().toLowerCase();
-
-                    EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(final JSONArray response) {
-                            Gson gson = new Gson();
-
-                            ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>()
-                            {
-                            }.getType());
-
-                            if(alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() >0) {
-
-                                arrayListFilterAdpater = new ArrayList<String>();
-                                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
-                                    arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
-                                }
-                            }
-
-                            ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,arrayListFilterAdpater);
-
-                            actSource.setAdapter(adapter);
-                            actSource.setThreshold(1);
+  private void findViews() {
+    actSource = (AutoCompleteTextView) parentView.findViewById(R.id.act_Source);
+    actDestination = (AutoCompleteTextView) parentView.findViewById(R.id.act_Destination);
+    rvRoute = (RecyclerView) parentView.findViewById(R.id.rv_Route);
+  }
 
 
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(final VolleyError error) {
-                        }
-                    });
+  private void initActionBar() {
+    toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+    toolbar.setTitle(getString(R.string.menu_execute_a_plan));
+    toolbar.setDisplayHomeAsUpEnabled(true);
+    toolbar.setHomeButtonEnabled(true);
+  }
 
+  public void callAutoCompleteAPI() {
+
+    actSource.addTextChangedListener(new TextWatcher() {
+
+      public void afterTextChanged(Editable s) {
+      }
+
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+      }
+
+      public void onTextChanged(CharSequence query, int start, int before, int count) {
+
+        if (count >= 3) {
+          query = query.toString().toLowerCase();
+
+          EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(final JSONArray response) {
+              Gson gson = new Gson();
+
+              ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>() {
+              }.getType());
+
+              if (alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() > 0) {
+
+                arrayListFilterAdpater = new ArrayList<String>();
+                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
+                  arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
                 }
+              }
+
+              ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, arrayListFilterAdpater);
+
+              actSource.setAdapter(adapter);
+              actSource.setThreshold(1);
+
+
             }
-        });
+          }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(final VolleyError error) {
+            }
+          });
+
+        }
+      }
+    });
 
 
+    actSource.addTextChangedListener(new TextWatcher() {
 
-        actSource.addTextChangedListener(new TextWatcher() {
+      public void afterTextChanged(Editable s) {
+      }
 
-            public void afterTextChanged(Editable s) {}
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+      }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+      public void onTextChanged(CharSequence query, int start, int before, int count) {
 
-            public void onTextChanged(CharSequence query, int start, int before, int count) {
+        if (count >= 3) {
+          query = query.toString().toLowerCase();
 
-                if(count >= 3)
-                {
-                    query = query.toString().toLowerCase();
+          EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(final JSONArray response) {
+              Gson gson = new Gson();
 
-                    EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(final JSONArray response) {
-                            Gson gson = new Gson();
+              ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>() {
+              }.getType());
 
-                            ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>()
-                            {
-                            }.getType());
+              if (alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() > 0) {
 
-                            if(alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() >0) {
-
-                                arrayListFilterAdpater = new ArrayList<String>();
-                                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
-                                    arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
-                                }
-                            }
-
-                            ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,arrayListFilterAdpater);
-
-                            actDestination.setAdapter(adapter);
-                            actDestination.setThreshold(1);
-
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(final VolleyError error) {
-                        }
-                    });
-
+                arrayListFilterAdpater = new ArrayList<String>();
+                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
+                  arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
                 }
+              }
+
+              ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, arrayListFilterAdpater);
+
+              actDestination.setAdapter(adapter);
+              actDestination.setThreshold(1);
+
+
             }
-        });
-    }
+          }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(final VolleyError error) {
+            }
+          });
+
+        }
+      }
+    });
+  }
 
 
-    private void createRouteView() {
-        rvRoute.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        rvRoute.setLayoutManager(mLayoutManager);
-        mAdapter = new RouteAdapter(new ArrayList<String>(), getActivity());
-        rvRoute.setAdapter(mAdapter);
-    }
+  private void createRouteView() {
+    rvRoute.setHasFixedSize(true);
+    mLayoutManager = new LinearLayoutManager(getActivity());
+    rvRoute.setLayoutManager(mLayoutManager);
+    mAdapter = new RouteAdapter(new ArrayList<String>(), getActivity());
+    rvRoute.setAdapter(mAdapter);
+  }
 }
