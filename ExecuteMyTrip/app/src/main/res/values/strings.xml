@@ -34,5 +34,7 @@
   <string name="time">Time : </string>
   <string name="price">Price :</string>
   <string name="waytogo">Way to Go</string>
+  <string name="route_plan_a_trip">Please plan a trip.</string>
+
 
 </resources>

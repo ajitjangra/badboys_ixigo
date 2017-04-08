@@ -2,6 +2,7 @@ package com.bb.executemytrip;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,13 +13,15 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.bb.executemytrip.adapter.AutoCompleteArrayAdapter;
 import com.bb.executemytrip.adapter.RouteAdapter;
 import com.bb.executemytrip.api.EmtRestController;
+import com.bb.executemytrip.customview.EmtTextView;
 import com.bb.executemytrip.model.AutoCompleteCityModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,10 +38,10 @@ public class RouteFragment extends Fragment
   private Context ctx;
   private AutoCompleteTextView actSource, actDestination;
   private RecyclerView rvRoute;
+  private EmtTextView tvPlanATrip;
   private RecyclerView.Adapter mAdapter;
   private RecyclerView.LayoutManager mLayoutManager;
   private android.support.v7.app.ActionBar toolbar;
-  private ArrayList<String> arrayListFilterAdpater = null;
 
   @Override
   public void onAttach(Context ctx) {
@@ -50,19 +53,28 @@ public class RouteFragment extends Fragment
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    parentView = inflater.inflate(R.layout.content_home, container, false);
+    parentView = inflater.inflate(R.layout.fragment_route, container, false);
     findViews();
     initActionBar();
-    callAutoCompleteAPI();
+
+    registerListener();
     createRouteView();
     return parentView;
   }
 
+  private void registerListener() {
+    actSource.addTextChangedListener(sourceListener);
+    actSource.setOnItemClickListener(sourceItemClickListener);
+    actDestination.addTextChangedListener(destinationListener);
+    actDestination.setOnItemClickListener(destinationItemClickListener);
+  }
+
 
   private void findViews() {
-    actSource = (AutoCompleteTextView) parentView.findViewById(R.id.act_Source);
-    actDestination = (AutoCompleteTextView) parentView.findViewById(R.id.act_Destination);
-    rvRoute = (RecyclerView) parentView.findViewById(R.id.rv_Route);
+    actSource = (AutoCompleteTextView) parentView.findViewById(R.id.act_source);
+    actDestination = (AutoCompleteTextView) parentView.findViewById(R.id.act_destination);
+    rvRoute = (RecyclerView) parentView.findViewById(R.id.rv_route);
+    tvPlanATrip = (EmtTextView) parentView.findViewById(R.id.tv_plan_a_trip);
   }
 
 
@@ -73,102 +85,111 @@ public class RouteFragment extends Fragment
     toolbar.setHomeButtonEnabled(true);
   }
 
-  public void callAutoCompleteAPI() {
 
-    actSource.addTextChangedListener(new TextWatcher() {
+  private ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel;
+  final TextWatcher sourceListener = new TextWatcher() {
+    @Override
+    public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 
-      public void afterTextChanged(Editable s) {
-      }
+    }
 
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-      }
+    @Override
+    public void onTextChanged(CharSequence query, int start, int before, int count) {
+      if (query.toString().trim().length() > 3) {
 
-      public void onTextChanged(CharSequence query, int start, int before, int count) {
+        EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl(query.toString()), new Response.Listener<JSONArray>() {
+          @Override
+          public void onResponse(final JSONArray response) {
+            Gson gson = new Gson();
 
-        if (count >= 3) {
-          query = query.toString().toLowerCase();
+            alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>() {
+            }.getType());
 
-          EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(final JSONArray response) {
-              Gson gson = new Gson();
+            AutoCompleteArrayAdapter adapter = new AutoCompleteArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, alAutoCompleteCityModel);
 
-              ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>() {
-              }.getType());
+            actSource.setAdapter(adapter);
+            actSource.setThreshold(1);
+            actSource.setTextColor(Color.BLACK);
+          }
+        }, new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse(final VolleyError error) {
+            // No need to do anything
+          }
+        });
 
-              if (alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() > 0) {
-
-                arrayListFilterAdpater = new ArrayList<String>();
-                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
-                  arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
-                }
-              }
-
-              ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, arrayListFilterAdpater);
-
-              actSource.setAdapter(adapter);
-              actSource.setThreshold(1);
-
-
-            }
-          }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(final VolleyError error) {
-            }
-          });
-
+      } else {
+        if (alAutoCompleteCityModel != null) {
+          alAutoCompleteCityModel.clear();
         }
       }
-    });
+    }
 
+    @Override
+    public void afterTextChanged(final Editable editable) {
 
-    actSource.addTextChangedListener(new TextWatcher() {
+    }
+  };
 
-      public void afterTextChanged(Editable s) {
-      }
+  final AdapterView.OnItemClickListener sourceItemClickListener = new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(final AdapterView<?> adapterView, final View view, final int pos, final long id) {
+      String xid = alAutoCompleteCityModel.get(pos).xid;
+      EmtApplication.setValue("sourcexid", xid);
+    }
+  };
 
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-      }
+  final TextWatcher destinationListener = new TextWatcher() {
+    @Override
+    public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 
-      public void onTextChanged(CharSequence query, int start, int before, int count) {
+    }
 
-        if (count >= 3) {
-          query = query.toString().toLowerCase();
+    @Override
+    public void onTextChanged(CharSequence query, int start, int before, int count) {
+      if (query.toString().trim().length() > 3) {
 
-          EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl((String) query), new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(final JSONArray response) {
-              Gson gson = new Gson();
+        EmtRestController.executeGetArray((Application) getActivity().getApplicationContext(), EmtRestController.getAutoCompleteCityUrl(query.toString()), new Response.Listener<JSONArray>() {
+          @Override
+          public void onResponse(final JSONArray response) {
+            Gson gson = new Gson();
 
-              ArrayList<AutoCompleteCityModel> alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>() {
-              }.getType());
+            alAutoCompleteCityModel = gson.fromJson(response.toString(), new TypeToken<ArrayList<AutoCompleteCityModel>>() {
+            }.getType());
 
-              if (alAutoCompleteCityModel != null && alAutoCompleteCityModel.size() > 0) {
+            AutoCompleteArrayAdapter adapter = new AutoCompleteArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, alAutoCompleteCityModel);
 
-                arrayListFilterAdpater = new ArrayList<String>();
-                for (int i = 0; i < alAutoCompleteCityModel.size(); i++) {
-                  arrayListFilterAdpater.add(alAutoCompleteCityModel.get(i).text);
-                }
-              }
+            actDestination.setAdapter(adapter);
+            actDestination.setThreshold(1);
+            actDestination.setTextColor(Color.BLACK);
+          }
+        }, new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse(final VolleyError error) {
+            // No need to do anything
+          }
+        });
 
-              ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, arrayListFilterAdpater);
-
-              actDestination.setAdapter(adapter);
-              actDestination.setThreshold(1);
-
-
-            }
-          }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(final VolleyError error) {
-            }
-          });
-
+      } else {
+        if (alAutoCompleteCityModel != null) {
+          alAutoCompleteCityModel.clear();
         }
       }
-    });
-  }
+    }
 
+    @Override
+    public void afterTextChanged(final Editable editable) {
+
+    }
+  };
+
+  final AdapterView.OnItemClickListener destinationItemClickListener = new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(final AdapterView<?> adapterView, final View view, final int pos, final long id) {
+      String xid = alAutoCompleteCityModel.get(pos).xid;
+      EmtApplication.setValue("destinationxid", xid);
+    }
+  };
 
   private void createRouteView() {
     rvRoute.setHasFixedSize(true);

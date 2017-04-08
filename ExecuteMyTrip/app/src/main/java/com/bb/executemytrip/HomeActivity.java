@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
 
-    return super.onOptionsItemSelected(item);
+    return false;
   }
 
   @SuppressWarnings("StatementWithEmptyBody")
