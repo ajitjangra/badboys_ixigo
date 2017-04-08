@@ -57,6 +57,9 @@ public class A2BModel {
       @SerializedName("layOverTimes")
       public ArrayList<LayOverTimes> layOverTimes;
 
+      @SerializedName("timeUnit")
+      public String timeUnit;
+
       public class Steps {
         @SerializedName("origin")
         public String origin;

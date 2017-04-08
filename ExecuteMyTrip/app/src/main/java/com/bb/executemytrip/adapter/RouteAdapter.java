@@ -104,7 +104,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
       A2BModel.Data.Routes route = arrayList.get(position - 1);
 
-      holder.tvTimeValue.setText(route.time);
+      holder.tvTimeValue.setText(route.time + " " + route.timeUnit);
       holder.tvPriceValue.setText(route.price);
 
       if (route.isFastestRoute) {

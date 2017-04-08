@@ -19,7 +19,9 @@
     android:id="@+id/tv_source"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp"/>
+    android:padding="5dp"
+    android:textColor="@color/black"
+    android:textStyle="bold"/>
 
   <View
     android:layout_width="0dp"
@@ -56,6 +58,8 @@
     android:id="@+id/tv_destination"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp"/>
+    android:padding="5dp"
+    android:textColor="@color/black"
+    android:textStyle="bold"/>
 
 </LinearLayout>

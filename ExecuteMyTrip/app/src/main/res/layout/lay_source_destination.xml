@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
   <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/lighter_gray"
     android:elevation="5dp"
     android:padding="5dp">
 
@@ -22,30 +24,29 @@
 
 
       <ImageView
+        android:layout_marginTop="20dp"
         android:id="@+id/iv_source"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/oval"/>
+        android:layout_marginRight="15dp"
+        android:src="@drawable/circle_source"/>
 
 
       <AutoCompleteTextView
         android:id="@+id/act_source"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@id/iv_source"
         android:hint="@string/source"/>
 
 
       <View
         android:id="@+id/view"
         android:layout_width="1dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/iv_source"
-        android:layout_marginLeft="8dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_marginLeft="7dp"
+        android:background="@color/colorPrimary"/>
 
 
       <ImageView
@@ -53,18 +54,17 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_below="@+id/view"
-        android:src="@drawable/oval"/>
+        android:layout_marginRight="15dp"
+        android:src="@drawable/circle_destination"/>
 
 
       <AutoCompleteTextView
+        android:layout_marginTop="-20dp"
         android:id="@+id/act_destination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignRight="@+id/iv_destination"
-        android:layout_below="@+id/act_source"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@id/view"
+        android:layout_toRightOf="@id/iv_destination"
         android:hint="@string/destination"/>
 
 

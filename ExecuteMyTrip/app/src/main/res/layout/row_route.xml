@@ -13,6 +13,7 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -39,8 +40,8 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="5dp"
           android:layout_toRightOf="@id/tv_time_label"
-          android:text="10:00 PM"
-          android:textColor="@color/black"/>
+          android:textColor="@color/black"
+          android:textStyle="bold"/>
 
         <com.bb.executemytrip.customview.EmtTextView
           android:id="@+id/tv_price_label"
@@ -57,8 +58,8 @@
           android:layout_marginBottom="5dp"
           android:layout_marginLeft="5dp"
           android:layout_toRightOf="@id/tv_price_label"
-          android:text="128.00"
-          android:textColor="@color/black"/>
+          android:textColor="@color/black"
+          android:textStyle="bold"/>
 
       </RelativeLayout>
 
@@ -68,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/tv_roundedcorner"
+        android:textColor="@color/white"
         android:visibility="gone"/>
 
 
@@ -86,7 +88,8 @@
       android:layout_height="wrap_content"
       android:padding="5dp"
       android:text="@string/waytogo"
-      android:textAlignment="center"/>
+      android:textAlignment="center"
+      android:textStyle="bold"/>
 
     <!--we can add the recycle view in case of ll_step but in this case no much data , so i use
     Linearlayout-->
