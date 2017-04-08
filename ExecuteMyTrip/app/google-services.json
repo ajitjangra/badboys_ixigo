@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "807136610134",
+    "firebase_url": "https://executemytrip.firebaseio.com",
+    "project_id": "executemytrip",
+    "storage_bucket": "executemytrip.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807136610134:android:d8ca4be04682d446",
+        "android_client_info": {
+          "package_name": "com.bb.executemytrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807136610134-divep0lckd03n1i46i9pg1cj9j8e75s9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfaQLFW9Zl4HVF2BIu7wM-abthjYf-RG8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
