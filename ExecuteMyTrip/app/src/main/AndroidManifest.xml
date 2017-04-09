@@ -14,8 +14,8 @@
     android:theme="@style/AppTheme.NoActionBar">
     <activity
       android:name=".EmtSplashActivity"
-      android:theme="@style/AppTheme.NoActionBar"
-      android:screenOrientation="portrait">
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -29,6 +29,8 @@
     <activity
       android:name=".HomeActivity"
       android:screenOrientation="portrait"/>
+
+    <activity android:name=".RouteDetailActivity" android:screenOrientation="portrait"/>
   </application>
 
 </manifest>

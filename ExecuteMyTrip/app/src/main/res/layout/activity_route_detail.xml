@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="com.bb.executemytrip.HomeActivity">
+
+  <android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorPrimary"
+      app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+  </android.support.design.widget.AppBarLayout>
+
+  <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:id="@+id/ll_step"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_above="@+id/ll_promo"
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+    </LinearLayout>
+
+
+    <LinearLayout
+      android:id="@+id/ll_promo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <com.bb.executemytrip.customview.EmtEditText
+        android:id="@+id/et_promo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/detail_promoCode_hint"/>
+
+      <Button
+        android:id="@+id/btn_lets_execute_pan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="@string/detail_let_execute_plan"
+        android:textAllCaps="false"
+        android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

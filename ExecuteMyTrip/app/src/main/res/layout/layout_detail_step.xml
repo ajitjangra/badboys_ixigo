@@ -1,157 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:padding="5dp">
+
+
+  <LinearLayout
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:src="@drawable/oval"/>
+
+    <View
+      android:id="@+id/v_line"
+      android:layout_width="0.5dp"
+      android:layout_height="wrap_content"
+      android:background="@android:color/darker_gray"/>
+
+  </LinearLayout>
+
+
+  <RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="5dp">
 
 
     <LinearLayout
+      android:id="@+id/ll_source_destination_detail_step"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <com.bb.executemytrip.customview.EmtTextView
+        android:id="@+id/tv_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:text="Source"
+        android:textColor="@color/colorPrimary"/>
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/oval"/>
+      <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_weight="1"/>
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0.5dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/darker_gray"/>
+      <com.bb.executemytrip.customview.EmtTextView
+        android:id="@+id/tv_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Destination"
+        android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingLeft="5dp">
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_fastest_carrier_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/ll_source_destination_detail_step"
+      android:layout_marginTop="10dp"
+      android:text="@string/detail_fastest_carrier"/>
+
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_fastest_carrier_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/ll_source_destination_detail_step"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/tv_fastest_carrier_label"
+      android:textColor="@color/black"/>
+
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_possible_carrier_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_fastest_carrier_label"
+      android:layout_marginTop="5dp"
+      android:text="@string/detail_Possible_carrier"/>
+
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_possible_carrier_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_fastest_carrier_value"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/tv_possible_carrier_label"
+      android:textColor="@color/black"/>
+
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_min_price_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_possible_carrier_label"
+      android:layout_marginTop="5dp"
+      android:text="@string/detail_minimum_price"/>
 
 
-        <LinearLayout
-            android:id="@+id/ll_source_destination_detail_step"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <com.bb.executemytrip.customview.EmtTextView
-                android:id="@+id/tv_source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Source"/>
-
-            <View android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="0.5dp"/>
-
-            <com.bb.executemytrip.customview.EmtTextView
-                android:id="@+id/tv_destination"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Destination"/>
-
-        </LinearLayout>
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_min_price_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_possible_carrier_value"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/tv_min_price_label"
+      android:textColor="@color/black"/>
 
 
-
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_fastest_carrier_label"
-            android:layout_below="@+id/ll_source_destination_detail_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_fastest_carrier"/>
-
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_fastest_carrier_value"
-            android:layout_below="@+id/ll_source_destination_detail_step"
-            android:layout_toRightOf="@+id/tv_fastest_carrier_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_possible_carrier_label"
-            android:layout_below="@+id/tv_fastest_carrier_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_Possible_carrier"/>
-
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_possible_carrier_value"
-            android:layout_below="@+id/tv_fastest_carrier_value"
-            android:layout_toRightOf="@+id/tv_possible_carrier_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_min_price_label"
-            android:layout_below="@+id/tv_possible_carrier_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_minimum_price"/>
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_min_time_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_min_price_label"
+      android:layout_marginTop="5dp"
+      android:text="@string/detail_minimum_time"/>
 
 
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_min_price_value"
-            android:layout_below="@+id/tv_possible_carrier_value"
-            android:layout_toRightOf="@+id/tv_min_price_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_min_time_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_min_price_value"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/tv_min_time_label"
+      android:textColor="@color/black"/>
 
 
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_min_time_label"
-            android:layout_below="@+id/tv_min_price_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_minimum_time"/>
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_distance_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_min_time_label"
+      android:layout_marginTop="5dp"
+      android:text="@string/detail_distance"/>
 
 
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_min_time_value"
-            android:layout_below="@+id/tv_min_price_value"
-            android:layout_toRightOf="@+id/tv_min_time_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_distance_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_min_time_value"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/tv_distance_label"
+      android:textColor="@color/black"/>
 
 
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_distance_label"
-            android:layout_below="@+id/tv_min_time_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_distance"/>
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_fastest_carrie_duration_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_distance_label"
+      android:layout_marginTop="5dp"
+      android:text="@string/detail_fastest_carrier_duration"/>
+
+    <com.bb.executemytrip.customview.EmtTextView
+      android:id="@+id/tv_fastest_carrie_duration_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_distance_value"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/tv_fastest_carrie_duration_label"
+      android:textColor="@color/black"/>
 
 
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_distance_value"
-            android:layout_below="@+id/tv_min_time_value"
-            android:layout_toRightOf="@+id/tv_distance_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_fastest_carrie_duration_label"
-            android:layout_below="@+id/tv_distance_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_fastest_carrier_duration"/>
-
-        <com.bb.executemytrip.customview.EmtTextView
-            android:id="@+id/tv_fastest_carrie_duration_value"
-            android:layout_below="@+id/tv_distance_value"
-            android:layout_toRightOf="@+id/tv_fastest_carrie_duration_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-    </RelativeLayout>
+  </RelativeLayout>
 
 
 </LinearLayout>

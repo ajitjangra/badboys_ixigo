@@ -73,6 +73,12 @@ public class A2BModel {
         @SerializedName("destinationCode")
         public String destinationCode;
 
+        @SerializedName("fastestCarrier")
+        public String fastestCarrier;
+
+        @SerializedName("fastestCarrierDuration")
+        public String fastestCarrierDuration;
+
         @SerializedName("mode")
         public String mode;
 
