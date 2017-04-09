@@ -11,15 +11,19 @@ import android.widget.LinearLayout;
 import com.bb.executemytrip.customview.EmtEditText;
 import com.bb.executemytrip.customview.EmtTextView;
 import com.bb.executemytrip.model.A2BModel;
+import com.bb.executemytrip.model.PromoCode;
 import com.bb.executemytrip.util.EmtUtility;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 
 /**
  * Created by zakir on 4/9/2017.
  */
 
-public class RouteDetailActivity extends AppCompatActivity {
+public class RouteDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
   private EmtTextView tvSource, tvDestination;
   private EmtEditText etPromo;
@@ -28,6 +32,7 @@ public class RouteDetailActivity extends AppCompatActivity {
   private A2BModel.Data.Routes routes;
   private Toolbar toolbar;
   private LinearLayout llStep;
+  private EmtTextView tvApplyPromo;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,11 @@ public class RouteDetailActivity extends AppCompatActivity {
     initToolBar();
     getDataFromIntent();
     updateUI();
+    registerListener();
+  }
+
+  private void registerListener() {
+    tvApplyPromo.setOnClickListener(this);
   }
 
   private void updateUI() {
@@ -84,6 +94,7 @@ public class RouteDetailActivity extends AppCompatActivity {
     etPromo = (EmtEditText) findViewById(R.id.et_promo);
     btnLetsExecutePlan = (Button) findViewById(R.id.btn_lets_execute_pan);
     llStep = (LinearLayout) findViewById(R.id.ll_step);
+    tvApplyPromo = (EmtTextView) findViewById(R.id.tv_apply_promo);
   }
 
 
@@ -106,5 +117,43 @@ public class RouteDetailActivity extends AppCompatActivity {
   public boolean onSupportNavigateUp() {
     onBackPressed();
     return true;
+  }
+
+  @Override
+  public void onClick(final View view) {
+    switch (view.getId()) {
+      case R.id.tv_apply_promo:
+        applyPromoCode();
+        break;
+    }
+  }
+
+  private void applyPromoCode() {
+    String enteredPromoCode = etPromo.getText().toString().trim();
+
+    String promoCodeArray = EmtApplication.getValue("promocode", "");
+    if (!EmtUtility.isNullOrWhiteSpace(promoCodeArray)) {
+      Gson gson = new Gson();
+      final ArrayList<PromoCode> alPromoCodeTemp = gson.fromJson(promoCodeArray, new TypeToken<ArrayList<PromoCode>>() {
+      }.getType());
+
+      boolean isPromoCodeApplied = false;
+      for (int i = 0; i < alPromoCodeTemp.size(); i++) {
+        PromoCode promoCode = alPromoCodeTemp.get(i);
+
+        if (enteredPromoCode.equals(promoCode.key)) {
+          isPromoCodeApplied = true;
+          EmtUtility.ToasterUtility.showToastS(getString(R.string.detail_promo_code_applied_successfully));
+          break;
+        }
+
+      }
+
+      if (!isPromoCodeApplied) {
+        EmtUtility.ToasterUtility.showToastS(getString(R.string.detail_promo_code_applied_failure));
+      }
+
+    }
+
   }
 }

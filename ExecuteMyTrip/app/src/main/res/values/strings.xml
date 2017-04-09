@@ -54,5 +54,8 @@
   <string name="detail_distance">Distance: </string>
   <string name="detail_fastest_carrier_duration">Fastest Carrier Duration: </string>
   <string name="detail_root_details">Route Details</string>
+  <string name="detail_apply_promo">Apply Promo</string>
+  <string name="detail_promo_code_applied_successfully">Promo Code applied successfully</string>
+  <string name="detail_promo_code_applied_failure">Invalid Promo Code!!!</string>
 
 </resources>

@@ -43,25 +43,40 @@
       android:id="@+id/ll_promo"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:orientation="horizontal">
 
       <com.bb.executemytrip.customview.EmtEditText
         android:id="@+id/et_promo"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:layout_weight="1"
         android:hint="@string/detail_promoCode_hint"/>
 
-      <Button
-        android:id="@+id/btn_lets_execute_pan"
-        android:layout_width="match_parent"
+      <com.bb.executemytrip.customview.EmtTextView
+        android:id="@+id/tv_apply_promo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="@string/detail_let_execute_plan"
+        android:background="@android:color/holo_orange_light"
+        android:hint="@string/detail_apply_promo"
+        android:padding="3dp"
         android:textAllCaps="false"
         android:textColor="@color/white"/>
 
+
     </LinearLayout>
+
+    <Button
+      android:id="@+id/btn_lets_execute_pan"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimary"
+      android:text="@string/detail_let_execute_plan"
+      android:textAllCaps="false"
+      android:textColor="@color/white"/>
+
 
   </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
